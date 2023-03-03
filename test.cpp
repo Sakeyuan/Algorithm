@@ -15,7 +15,6 @@
     int main(){
         string s="()";
         s.find("s");
-        s.replace(1," ","");
         isValid(s);
         return 0 ;
     }
