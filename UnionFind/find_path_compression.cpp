@@ -1,54 +1,57 @@
 /*路径压缩并查集算法*/
 #include<iostream>
-class WeightUF{
+class UNION_FIND{
 public:
-    WeightUF(int N);
-    ~WeightUF();
-    int find_root(int p);
+    UNION_FIND(int N);
+    ~UNION_FIND();
+    int find_root(int p);     
     bool union_root(int p,int q);
-
-private:
+    int setNum(){ return count;}  //集合数量
+    
     int* parent;
-    int* rank;
+    int* rank;  //树的高度
+    int count; //集合数量
 };
-int WeightUF::find_root(int p){
-    while(p!=parent[p]){
-        parent[p]=parent[parent[p]];    //将沿途路径压缩
+int UNION_FIND::find_root(int p){
+    while(p != parent[p]){  //当不是根节点的时，将沿路找父节点的每个节点都压缩
+        parent[p] = parent[parent[p]];    //将沿途路径压缩
         p=parent[p];
     }
     return p;
 }
-bool WeightUF::union_root(int p,int q){
+bool UNION_FIND::union_root(int p,int q){
     int p_root=find_root(p);
     int q_root=find_root(q);
     if(p_root==q_root)  return 0;
-    //小数连接大树
+    //小数连接大树高度不增加
     else if(rank[p_root]>rank[q_root]) parent[q_root]=p_root;
     else if(rank[p_root]<rank[q_root]) parent[p_root]=q_root;
     else{
         parent[p_root]=q_root;
-        rank[q_root]++;
+        rank[q_root]++; //父节点统计高度
     }
+    count--;
     return 1;
 }
-WeightUF::WeightUF(int N){
+UNION_FIND::UNION_FIND(int N){
         parent=new int[N];
         rank=new int[N];
+        this->count=N;
         for(int i=0;i<N;i++)    parent[i]=i;
         for(int i=0;i<N;i++)    rank[i]=0;   
     }
-WeightUF::~WeightUF(){
+UNION_FIND::~UNION_FIND(){
     delete[] parent;
     delete[] rank;
 }
 int main(){
-    WeightUF weightUF(10);
+    UNION_FIND uf(10);
     int edges[3][2]={{3,8},{3,4},{8,9}};
     for (int i = 0; i < 3; i++)
     {
         int x=edges[i][0];
         int y=edges[i][1];
-        if(weightUF.union_root(x,y)==0){
+        if(uf.union_root(x,y)==0){
             std::cout<<"cycle detected\n";
             system("pause");
             exit(1);
