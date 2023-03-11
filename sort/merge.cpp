@@ -16,7 +16,7 @@ void merge(int* a,int N,int l,int r,int mid){
     int p3=0;
     
     while (p1<=mid && p2<=r)
-        tmp[p3++]=a[p1]<=a[p2]?a[p1++]:a[p2++];
+        tmp[p3++]=a[p1]<=a[p2]?a[p1++]:a[p2++];  //=可以保证稳定性
     
     //左边还剩下
     while (p1<=mid)
@@ -27,8 +27,9 @@ void merge(int* a,int N,int l,int r,int mid){
         tmp[p3++]=a[p2++];
     
     //将排序好的放回原数组
-    for (int i = 0; i < p3; i++)  //注意这里的是i<p3,而不是N
-        a[l+i]=tmp[i];
+    p3=0;
+    while (l<=r)
+        a[l++]=tmp[p3++];
 }
 void print(int* a,int N){
     for (int i = 0; i < N; ++i)
@@ -38,7 +39,7 @@ void print(int* a,int N){
     std::cout<<std::endl;
 }
 int main(){
-    int a[]={2,141,23,41,9};
+    int a[]={2,141,23,41,9,2,3,1,-1,-100,0,3};
     int N=sizeof(a)/sizeof(a[0]);
     merge_sort(a,N,0,N-1);
     print(a,N);
