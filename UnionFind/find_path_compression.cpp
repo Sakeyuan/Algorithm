@@ -1,15 +1,16 @@
 /*路径压缩并查集算法*/
 #include<iostream>
+#include<vector>
 class UNION_FIND{
 public:
     UNION_FIND(int N);
     ~UNION_FIND();
     int find_root(int p);     
     bool union_root(int p,int q);
-    int setNum(){ return count;}  //集合数量
+    int getCount(){ return count;}  //集合数量
     
-    int* parent;
-    int* rank;  //树的高度
+    std::vector<int> parent;
+    std::vector<int> rank;  //树的高度
     int count; //集合数量
 };
 int UNION_FIND::find_root(int p){
@@ -33,17 +34,15 @@ bool UNION_FIND::union_root(int p,int q){
     count--;
     return 1;
 }
+
+
 UNION_FIND::UNION_FIND(int N){
-        parent=new int[N];
-        rank=new int[N];
+
         this->count=N;
-        for(int i=0;i<N;i++)    parent[i]=i;
-        for(int i=0;i<N;i++)    rank[i]=0;   
+        for(int i=0;i<N;i++)    parent.push_back(i);
+        for(int i=0;i<N;i++)    rank.push_back(0);   
     }
-UNION_FIND::~UNION_FIND(){
-    delete[] parent;
-    delete[] rank;
-}
+
 int main(){
     UNION_FIND uf(10);
     int edges[3][2]={{3,8},{3,4},{8,9}};

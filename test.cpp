@@ -1,11 +1,8 @@
-#include<stdio.h>
-#include<string.h>
+#include<iostream>
+using namespace std;
+
 int main(){
-    char* m_url;
-    char* text="Get weil";
-    m_url = strpbrk(text, " ");
-    printf("%s",m_url);
-    getchar();
-    getchar();
+    cout << (char)14<<endl;
+    system("pause");
     return 0;
 }
