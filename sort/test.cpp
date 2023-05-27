@@ -1,47 +1,73 @@
 #include<iostream>
 #include<vector>
+#include<algorithm>
 using namespace std;
 
-int count = 0;
-int reversePairs(vector<int>&nums) {
-    sort(nums, 0, nums.size() - 1);
-    return count;
-}
+struct node
+{
+    int val;
+    node* next;
+    node():val(0),next(NULL){};
+    node(int val):val(val),next(NULL){};
+};
 
-void sort(vector<int>&nums,int left,int right){
-    if(left < right){
-        int mid = (left+right) / 2;//开始递归划分
-
-        sort(nums,left,mid);//归并排序左部分（left,mid)
-
-        sort(nums,mid+1,right);//归并排序右部分(mid+1,right)
-        merge(nums,left,mid,right);//合并
-    }
-}
-
-void merge(vector<int>&nums, int left, int mid, int right) {
-    int i = left;   //左部分首元素
-    int j = mid + 1;//右部分首元素
-    int t = 0;
-    int temp[right-left+1];
-    while(i <=mid && j <=right){//在范围之内
-        if(nums[i] <= nums[j]){
-            temp[t++] = nums[i++];
+node* func(node* L1 , node* L2){
+    if(L1 == NULL) return L2;
+    if(L2 == NULL) return L1;
+    node* p1=L1,*p2=L2;
+    node* dummy=new node(-1);
+    node* prev = dummy;
+    while(p1 !=NULL && p2!=nullptr){
+        if(p1->val > p2->val){
+            prev->next=p2;
+            prev = p2;
+            p2=p2->next;
         }else{
-            count += (mid - i + 1);//只需要这行代码
-            temp[t++] = nums[j++];
+            prev->next=p1;
+            prev = p1;
+            p1=p1->next;
         }
     }
+    if(p1){
+        prev->next=p1;
+    }else{
+        prev->next=p2;
+    }
+    return dummy->next;
+}
 
-    while (i <= mid){//右边遍历完事了   左边还剩呢
-        temp[t++] = nums[i++];
+void printList(node* head ){
+    while(head){
+        cout<<head->val<<" ";
+        head=head->next;
     }
-    while( j <= right){//左边遍历完事了   右边还剩了
-        temp[t++] = nums[j++];
-    }
+    cout<<"\n";
+}
 
-    t = 0;//将temp中的元素  全部都copy到原数组里边去
-    while (left <=right){
-        nums[left++] = temp[t++];
-    }
+void createNode(node** tail,int val){
+    node* tmp=new node(val);
+    (*tail)->val=val;
+    (*tail)->next = tmp;
+    (*tail)=tmp;
+    (*tail)->next=nullptr;
+}
+int main() {
+    node* L1 = new node(2);
+    node* tail1 = L1;
+    node* L2 = new node(1);
+    node* tail2 = L2;
+
+    createNode(&tail1,4);
+    createNode(&tail1,6);
+
+    // createNode(tail2,1);
+    // createNode(tail2,5);
+    // createNode(tail2,2);
+
+    printList(L1);
+    // printList(L2);
+    // node* head=func(L1,L2);
+    // printList(head);
+    system("pause");
+	return 0;
 }

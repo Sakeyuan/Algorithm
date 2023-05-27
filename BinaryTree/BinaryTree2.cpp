@@ -76,7 +76,7 @@ int maxWidth(tree& root) {
     return maxWidth;
 }
 
-//宽度优先算法计算最大宽度
+//宽度优先算法计算最深度
 int maxDepth(tree &root) {
     if (root == NULL) return 0;
     queue<tree>q;

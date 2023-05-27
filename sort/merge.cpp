@@ -16,7 +16,7 @@ void merge(int* a,int N,int l,int r,int mid){
     int p3=0;
     
     while (p1<=mid && p2<=r)
-        tmp[p3++]=a[p1]<=a[p2]?a[p1++]:a[p2++];  //=可以保证稳定性
+        tmp[p3++]=a[p1] <= a[p2] ? a[p1++] : a[p2++];  //=可以保证稳定性
     
     //左边还剩下
     while (p1<=mid)
@@ -27,8 +27,8 @@ void merge(int* a,int N,int l,int r,int mid){
         tmp[p3++]=a[p2++];
     
     //将排序好的放回原数组
-    p3=0;
-    while (l<=r)
+    p3 = 0;
+    while (l <= r)
         a[l++]=tmp[p3++];
 }
 void print(int* a,int N){

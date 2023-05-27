@@ -32,7 +32,6 @@ TreeNode* createBT(istringstream& ss) {
     return node;
 }
 int preVal = INT_MIN;
-int premaxVal = INT_MIN;
 bool isValidBST(TreeNode* root) {
     if (root == nullptr) return true;
     bool isBST = isValidBST(root->left);
